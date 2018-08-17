@@ -1,0 +1,14 @@
+##> ide-config ##
+.idea/
+.vscode/
+##< ide-config ##
+
+##> composer ##
+vendor/
+composer.phar
+composer.lock
+##< composer ##
+
+##> php-cs-fixer ##
+.php_cs.cache
+##< php-cs-fixer ##

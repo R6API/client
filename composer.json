@@ -1,0 +1,10 @@
+{
+    "name": "r6api/client",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "R6API\\Client\\": "src/"
+        }
+    }
+}
