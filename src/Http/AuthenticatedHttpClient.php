@@ -68,7 +68,7 @@ class AuthenticatedHttpClient implements HttpClientInterface
 
     private function authenticate()
     {
-        $data = $this->authenticationApi->authenticate($this->authentication);
+        $data = $this->authenticationApi->authenticate($this->authentication->getBearer());
 
         $this->authentication
             ->setTicket($data['ticket'])

@@ -5,7 +5,6 @@ namespace R6API\Client\Api;
 
 use R6API\Client\Http\HttpClientInterface;
 use R6API\Client\Routing\UriGeneratorInterface;
-use R6API\Client\Security\Authentication;
 
 /**
  * API implementation to manage the authentication.
@@ -39,11 +38,11 @@ class AuthenticationApi implements AuthenticationApiInterface
     /**
      * {@inheritdoc}
      */
-    public function authenticate(Authentication $authentication): array
+    public function authenticate(string $bearer): array
     {
         $headers = [
             'Content-Type'  => 'application/json; charset=UTF-8',
-            'Authorization' => $authentication->getBearer(),
+            'Authorization' => $bearer,
             'Ubi-AppId'     => static::UBI_APPID
         ];
 
