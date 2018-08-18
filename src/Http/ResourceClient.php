@@ -33,7 +33,7 @@ class ResourceClient implements ResourceClientInterface
     /**
      * {@inheritdoc}
      */
-    public function getResource($uri, array $uriParameters = [], array $queryParameters = [])
+    public function getResource(string $uri, array $uriParameters = [], array $queryParameters = [])
     {
         $uri = $this->uriGenerator->generate($uri, $uriParameters, $queryParameters);
         $response = $this->httpClient->sendRequest('GET', $uri, ['Accept' => '*/*']);
@@ -44,7 +44,7 @@ class ResourceClient implements ResourceClientInterface
     /**
      * {@inheritdoc}
      */
-    public function createResource($uri, array $uriParameters = [], array $body = [])
+    public function createResource(string $uri, array $uriParameters = [], array $body = [])
     {
         unset($body['_links']);
 
@@ -62,7 +62,7 @@ class ResourceClient implements ResourceClientInterface
     /**
      * {@inheritdoc}
      */
-    public function deleteResource($uri, array $uriParameters = [])
+    public function deleteResource(string $uri, array $uriParameters = [])
     {
         $uri = $this->uriGenerator->generate($uri, $uriParameters);
 
@@ -74,7 +74,7 @@ class ResourceClient implements ResourceClientInterface
     /**
      * {@inheritdoc}
      */
-    public function getStreamedResource($uri, array $uriParameters = [])
+    public function getStreamedResource(string $uri, array $uriParameters = [])
     {
         $uri = $this->uriGenerator->generate($uri, $uriParameters);
         $response = $this->httpClient->sendRequest('GET', $uri, ['Accept' => '*/*']);

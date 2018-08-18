@@ -5,6 +5,7 @@ namespace R6API\Client\Http;
 
 use Http\Client\HttpClient as BaseHttpClient;
 use Http\Message\RequestFactory;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Http client to send a request without any authentication.
@@ -37,7 +38,7 @@ class HttpClient implements HttpClientInterface
     /**
      * {@inheritdoc}
      */
-    public function sendRequest($httpMethod, $uri, array $headers = [], $body = null)
+    public function sendRequest(string $httpMethod, $uri, array $headers = [], $body = null): ResponseInterface
     {
         $request = $this->requestFactory->createRequest($httpMethod, $uri, $headers, $body);
         $response = $this->httpClient->sendRequest($request);

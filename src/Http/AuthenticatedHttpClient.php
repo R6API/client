@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace R6API\Client\Http;
 
+use Psr\Http\Message\ResponseInterface;
 use R6API\Client\Api\AuthenticationApiInterface;
 use R6API\Client\Exception\UnauthorizedHttpException;
 use R6API\Client\Security\Authentication;
@@ -46,7 +47,7 @@ class AuthenticatedHttpClient implements HttpClientInterface
     /**
      * {@inheritdoc}
      */
-    public function sendRequest($httpMethod, $uri, array $headers = [], $body = null)
+    public function sendRequest(string $httpMethod, $uri, array $headers = [], $body = null): ResponseInterface
     {
         if ($this->authentication->isExpired()) {
             $this->authenticate();
