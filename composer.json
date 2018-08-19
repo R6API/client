@@ -1,5 +1,6 @@
 {
     "name": "r6api/client",
+    "description": "Client for the Rainbow 6 Siege stats API",
     "type": "library",
     "license": "MIT",
     "autoload": {

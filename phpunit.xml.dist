@@ -8,15 +8,14 @@
     convertNoticesToExceptions="true"
     convertWarningsToExceptions="true"
     processIsolation="true"
-    stopOnFailure="false"
-    syntaxCheck="false">
+    stopOnFailure="false">
 
     <php>
         <env name="CLIENT_EMAIL" value="" />
         <env name="CLIENT_PASSWORD" value="" />
     </php>
 
-    <testsuite>
+    <testsuite name="R6API_Client">
         <directory>tests/</directory>
     </testsuite>
 </phpunit>
