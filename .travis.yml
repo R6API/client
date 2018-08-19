@@ -1,0 +1,49 @@
+language: php
+
+services:
+  - redis-server
+
+notifications:
+  email:
+    on_failure: change
+
+env:
+  global:
+    - COMPOSER_UP="composer update --no-progress --no-suggest --ansi --prefer-dist"
+    - TEST_COMMAND="./vendor/bin/phpunit"
+    - COVERAGE=false
+
+matrix:
+  include:
+    - php: 7.0
+      env: PREFER="low"
+    - php: 7.0
+    - php: 7.1
+    - php: 7.2
+      env: COVERAGE=true TEST_FLAGS="--coverage --coverage-xml"
+
+install:
+  - |
+    if [[ PREFER = low ]]; then
+      $COMPOSER_UP --prefer-lowest --prefer-stable
+    else
+      $COMPOSER_UP
+    fi
+
+before_script:
+  - cp .phpunit.xml.dist .env
+  - sed -i "8s/.*/WG_API_KEY=$WG_API_KEY/" .env
+  - |
+    if [[ $COVERAGE = true ]]; then
+      curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+      chmod +x ./cc-test-reporter
+      ./cc-test-reporter before-build
+    fi
+
+script:
+  - composer validate --no-check-lock
+  - $TEST_COMMAND
+
+cache:
+  directories:
+    - $HOME/.composer/cache

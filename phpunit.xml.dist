@@ -12,8 +12,8 @@
     syntaxCheck="false">
 
     <php>
-        <env name="CLIENT_EMAIL" value="foo@bar.baz" />
-        <env name="CLIENT_PASSWORD" value="secret" />
+        <env name="CLIENT_EMAIL" value="" />
+        <env name="CLIENT_PASSWORD" value="" />
     </php>
 
     <testsuite>
