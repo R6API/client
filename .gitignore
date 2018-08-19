@@ -12,3 +12,7 @@ composer.lock
 ##> php-cs-fixer ##
 .php_cs.cache
 ##< php-cs-fixer ##
+
+##> phpunit ##
+phpunit.xml
+##< phpunit ##

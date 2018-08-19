@@ -7,6 +7,11 @@
             "R6API\\Client\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "R6API\\Client\\tests\\": "tests/"
+        }
+    },
     "require": {
         "php": ">=7.1",
         "psr/http-message": "^1.0",
@@ -17,7 +22,8 @@
         "php-http/client-implementation": "^1.0"
     },
     "require-dev": {
-        "php-http/guzzle6-adapter": "^1.1"
+        "php-http/guzzle6-adapter": "^1.1",
+        "phpunit/phpunit": "^7.3"
     },
     "suggest": {
         "php-http/guzzle6-adapter": "In order to use Guzzle v6 as the HTTP client"

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    bootstrap="vendor/autoload.php"
+    backupGlobals="false"
+    backupStaticAttributes="false"
+    colors="true"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    processIsolation="true"
+    stopOnFailure="false"
+    syntaxCheck="false">
+
+    <php>
+        <env name="CLIENT_EMAIL" value="foo@bar.baz" />
+        <env name="CLIENT_PASSWORD" value="secret" />
+    </php>
+
+    <testsuite>
+        <directory>tests/</directory>
+    </testsuite>
+</phpunit>
