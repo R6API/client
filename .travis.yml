@@ -15,9 +15,9 @@ env:
 
 matrix:
   include:
-    - php: 7.1
+    - php: 7.1.18
       env: PREFER="low"
-    - php: 7.1
+    - php: 7.1.18
     - php: 7.2
       env: COVERAGE=true TEST_FLAGS="--coverage --coverage-xml"
 
