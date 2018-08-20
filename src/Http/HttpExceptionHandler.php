@@ -6,6 +6,7 @@ namespace R6API\Client\Http;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use R6API\Client\Exception\HttpException;
+use R6API\Client\Exception\TooManyRequests;
 
 /**
  * It aims to throw exception thanks to the the response's HTTP status code if the request has failed.
@@ -26,8 +27,12 @@ class HttpExceptionHandler
      */
     public function transformResponseToException(RequestInterface $request, ResponseInterface $response)
     {
+        if ($response->getStatusCode() === 429) {
+            throw new TooManyRequests("Exceeded request rate limit, retry later.", $request, $response);
+        }
+
         if ($response->getStatusCode() !== 200) {
-            throw new HttpException("Unhandled status code", $request, $response);
+            throw new HttpException("Unhandled status code.", $request, $response);
         }
 
         return $response;
