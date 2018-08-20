@@ -20,6 +20,9 @@ use R6API\Client\Security\Authentication;
  */
 class AuthenticatedHttpClient implements HttpClientInterface
 {
+    /** @var string */
+    const UBI_APPID = '39baebad-39e5-4552-8c25-2c9b919064e2';
+
     /** @var HttpClient */
     protected $basicHttpClient;
 
