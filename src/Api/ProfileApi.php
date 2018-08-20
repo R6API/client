@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace R6API\Client\Api;
 
+use R6API\Client\Api\Type\PlatformType;
 use R6API\Client\Http\ResourceClientInterface;
 
 /**
@@ -31,7 +32,7 @@ class ProfileApi implements ProfileApiInterface
     public function get(string $platform, array $filters = []): array
     {
         $parameters = [
-            'platformType' => 'uplay'
+            'platformType' => constant(PlatformType::class.'::_PROFILES_'.$platform)
         ];
         $parameters = array_merge($filters, $parameters);
 
