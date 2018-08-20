@@ -5,6 +5,7 @@ namespace R6API\Client;
 
 use Http\Client\HttpClient;
 use R6API\Client\Api\AuthenticationApi;
+use R6API\Client\Api\ProfileApi;
 use R6API\Client\Http\AuthenticatedHttpClient;
 use R6API\Client\Http\HttpClient as ApiHttpClient;
 use Http\Discovery\HttpClientDiscovery;
@@ -117,7 +118,8 @@ class ClientBuilder
         $resourceClient = $this->setUp($authentication);
 
         $client = new Client(
-            $authentication
+            $authentication,
+            new ProfileApi($resourceClient)
         );
 
         return $client;

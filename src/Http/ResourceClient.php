@@ -36,7 +36,7 @@ class ResourceClient implements ResourceClientInterface
     public function getResource(string $uri, array $uriParameters = [], array $queryParameters = [])
     {
         $uri = $this->uriGenerator->generate($uri, $uriParameters, $queryParameters);
-        $response = $this->httpClient->sendRequest('GET', $uri, ['Accept' => '*/*']);
+        $response = $this->httpClient->sendRequest('GET', $uri);
 
         return json_decode($response->getBody()->getContents(), true);
     }
