@@ -13,8 +13,8 @@ class Authentication
     /** @var string */
     private $bearer;
 
-    /** @var int */
-    private $expiration = 0;
+    /** @var \DateTimeInterface */
+    private $expiration = null;
 
     /** @var string */
     private $ticket;
@@ -32,19 +32,30 @@ class Authentication
         return $authentication;
     }
 
+    /**
+     * If ticket token is expired.
+     *
+     * @return bool
+     */
     public function isExpired(): bool
     {
-        return time() >= $this->expiration;
+        if (null === $this->expiration) {
+            return true;
+        }
+
+        return time() >= $this->expiration->getTimestamp();
     }
 
     /**
-     * @param int $expiration
+     * @param string $expiration
      *
      * @return Authentication
+     *
+     * @throws \Exception
      */
-    public function setExpiration(int $expiration): self
+    public function setExpiration(string $expiration): self
     {
-        $this->expiration = $expiration;
+        $this->expiration = new \DateTimeImmutable($expiration);
 
         return $this;
     }
