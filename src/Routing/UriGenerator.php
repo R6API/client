@@ -34,10 +34,12 @@ class UriGenerator implements UriGeneratorInterface
      */
     public function generate(string $path, array $uriParameters = [], array $queryParameters = []): UriInterface
     {
-        $uriParameters = $this->encodeUriParameters($uriParameters);
+        $uri = $this->baseUri . '/' . ltrim($path, '/');
 
-        $uri = $this->baseUri . '/' . vsprintf(ltrim($path, '/'), $uriParameters);
-
+        if (count($uriParameters) > 0) {
+            $uriParameters = http_build_query($uriParameters);
+            $uri .= '?'.$uriParameters;
+        }
         $queryParameters = $this->booleanQueryParametersAsString($queryParameters);
 
         if (!empty($queryParameters)) {
