@@ -49,6 +49,8 @@ class AuthenticatedHttpClient implements HttpClientInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Exception
      */
     public function sendRequest(string $httpMethod, $uri, array $headers = [], $body = null): ResponseInterface
     {
@@ -57,18 +59,35 @@ class AuthenticatedHttpClient implements HttpClientInterface
         }
 
         try {
-            $headers['Ubi_v1'] =  sprintf('t=%s', $this->authentication->getTicket());
+            $headers = $this->genericHeaders($headers);
             $response = $this->basicHttpClient->sendRequest($httpMethod, $uri, $headers, $body);
         } catch (UnauthorizedHttpException $e) {
             $this->authenticate();
 
-            $headers['Ubi_v1'] =  sprintf('t=%s', $this->authentication->getTicket());
+            $headers = $this->genericHeaders($headers);
             $response =  $this->basicHttpClient->sendRequest($httpMethod, $uri, $headers, $body);
         }
 
         return $response;
     }
 
+    /**
+     * @param array $headers
+     *
+     * @return array
+     */
+    private function genericHeaders(array $headers): array
+    {
+        $headers['Content-Type'] = 'application/json; charset=UTF-8';
+        $headers['Authorization'] =  sprintf('Ubi_v1 t=%s', $this->authentication->getTicket());
+        $headers['Ubi-AppId'] = static::UBI_APPID;
+
+        return $headers;
+    }
+
+    /**
+     * @throws \Exception
+     */
     private function authenticate()
     {
         $data = $this->authenticationApi->authenticate($this->authentication->getBearer());
