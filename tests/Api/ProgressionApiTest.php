@@ -11,7 +11,7 @@ class ProgressionApiTest extends ApiTestCase
 {
     public function testSimpleSearch()
     {
-        $response = $this->client->getProgressionApi()->get(PlatformType::PC, ['profile_ids' => '575b8c76-a33a-4c19-9618-d14b9343d527']);
+        $response = $this->client->getProgressionApi()->get(PlatformType::PC, ['575b8c76-a33a-4c19-9618-d14b9343d527']);
 
         $this->assertArrayHasKey('player_profiles', $response);
 
@@ -23,19 +23,10 @@ class ProgressionApiTest extends ApiTestCase
 
     /**
      * @expectedException \R6API\Client\Exception\ApiException
-     * @expectedExceptionMessage "foo" doesn't exists as filter key.
+     * @expectedExceptionMessage "$profileIds" field require an UUID as value.
      */
     public function testInvalidFilter()
     {
-        $this->client->getProgressionApi()->get(PlatformType::PC, ['foo' => 'bar']);
-    }
-
-    /**
-     * @expectedException \R6API\Client\Exception\ApiException
-     * @expectedExceptionMessage "profile_ids" field require an UUID as value.
-     */
-    public function testProfileIdOnlyUuid()
-    {
-        $this->client->getProgressionApi()->get(PlatformType::PC, ['profile_ids' => 'bar']);
+        $this->client->getProgressionApi()->get(PlatformType::PC, ['foo']);
     }
 }

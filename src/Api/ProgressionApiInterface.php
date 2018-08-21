@@ -14,9 +14,9 @@ interface ProgressionApiInterface
      * @param string $platform  Platform to use for this request
      * @see PlatformType
      *
-     * @param array $filters    Filters to apply on this query
+     * @param array $profileIds Profile ID to seek for Progression (only UUID are accepted as profileId)
      *
      * @return array
      */
-    public function get(string $platform, array $filters = []): array;
+    public function get(string $platform, array $profileIds): array;
 }
