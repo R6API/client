@@ -6,7 +6,6 @@ namespace R6API\Client\Api;
 use R6API\Client\Api\Type\PlatformType;
 use R6API\Client\Exception\ApiException;
 use R6API\Client\Http\ResourceClientInterface;
-use Ramsey\Uuid\Uuid;
 
 /**
  * API implementation to manage the profiles.
@@ -33,7 +32,7 @@ class ProgressionApi implements ProgressionApiInterface
      */
     public function get(string $platform, array $filters = []): array
     {
-        // filters only accept 3 keys: profile_ids
+        // filters only accept one keys: profile_ids
         $acceptedFilterKeys = [
             'profile_ids'
         ];
