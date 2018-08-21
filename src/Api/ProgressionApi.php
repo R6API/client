@@ -53,11 +53,6 @@ class ProgressionApi implements ProgressionApiInterface
             }
         }
 
-        // only one filter is accepted at a time
-        if (count($filters) > 1) {
-            throw new ApiException(sprintf('Only one filter is accepted at a time. Among the following filters: %s.', implode(', ', $acceptedFilterKeys)));
-        }
-
         $url = str_replace('%%platform%%', constant(PlatformType::class.'::_URL_'.$platform), static::URL);
         return $this->resourceClient->getResource($url, $filters);
     }

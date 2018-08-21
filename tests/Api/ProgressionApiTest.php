@@ -38,13 +38,4 @@ class ProgressionApiTest extends ApiTestCase
     {
         $this->client->getProgressionApi()->get(PlatformType::PC, ['profile_ids' => 'bar']);
     }
-
-    /**
-     * @expectedException \R6API\Client\Exception\ApiException
-     * @expectedExceptionMessage Only one filter is accepted at a time. Among the following filters: profile_ids.
-     */
-    public function testTooMuchFilters()
-    {
-        $this->client->getProgressionApi()->get(PlatformType::PC, ['profile_ids' => '575b8c76-a33a-4c19-9618-d14b9343d527', 'foo' => 'bar']);
-    }
 }
