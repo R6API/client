@@ -2,7 +2,9 @@
 
 namespace R6API\Client\tests\Api;
 
+use Cache\Adapter\Predis\PredisCachePool;
 use PHPUnit\Framework\TestCase;
+use Predis\Client;
 use R6API\Client\ClientInterface;
 use R6API\Client\ClientBuilder;
 
@@ -19,7 +21,10 @@ abstract class ApiTestCase extends TestCase
 
     public function setUp()
     {
+        $cacheItemPool = new PredisCachePool(new Client());
+
         $this->builder = new ClientBuilder();
+        $this->builder->setCacheItemPool($cacheItemPool);
         $this->client = $this->builder->buildAuthenticated(
             getenv('CLIENT_EMAIL'),
             getenv('CLIENT_PASSWORD')
