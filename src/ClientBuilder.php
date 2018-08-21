@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace R6API\Client;
 
 use Http\Client\HttpClient;
+use Psr\Cache\CacheItemPoolInterface;
 use R6API\Client\Api\AuthenticationApi;
 use R6API\Client\Api\ProfileApi;
 use R6API\Client\Http\AuthenticatedHttpClient;
@@ -33,6 +34,9 @@ class ClientBuilder
 
     /** @var RequestFactory */
     protected $requestFactory;
+
+    /** @var CacheItemPoolInterface */
+    protected $cacheItemPool = null;
 
     /**
      * @param string $baseUri Base uri to request the API
@@ -94,6 +98,17 @@ class ClientBuilder
     }
 
     /**
+     * @param CacheItemPoolInterface $cacheItemPool
+     *
+     * @return $this
+     */
+    public function setCacheItemPool(CacheItemPoolInterface $cacheItemPool)
+    {
+        $this->cacheItemPool = $cacheItemPool;
+        return $this;
+    }
+
+    /**
      * Build the R6API client authenticated by email & password.
      *
      * @param string $email        Client id to use for the authentication
@@ -103,7 +118,7 @@ class ClientBuilder
      */
     public function buildAuthenticated(string $email, string $password): ClientInterface
     {
-        $authentication = Authentication::create($email, $password);
+        $authentication = Authentication::create($email, $password)->setCacheItemPool($this->cacheItemPool);
         return $this->buildAuthenticatedClient($authentication);
     }
 
@@ -114,7 +129,6 @@ class ClientBuilder
      */
     protected function buildAuthenticatedClient(Authentication $authentication)
     {
-        // @TODO would be used for future Api(s)
         $resourceClient = $this->setUp($authentication);
 
         $client = new Client(

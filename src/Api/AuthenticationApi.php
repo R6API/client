@@ -27,8 +27,10 @@ class AuthenticationApi implements AuthenticationApiInterface
      * @param HttpClientInterface   $httpClient
      * @param UriGeneratorInterface $uriGenerator
      */
-    public function __construct(HttpClientInterface $httpClient, UriGeneratorInterface $uriGenerator)
-    {
+    public function __construct(
+        HttpClientInterface $httpClient,
+        UriGeneratorInterface $uriGenerator
+    ) {
         $this->httpClient = $httpClient;
         $this->uriGenerator = $uriGenerator;
     }
