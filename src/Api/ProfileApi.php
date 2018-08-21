@@ -30,30 +30,22 @@ class ProfileApi implements ProfileApiInterface
     /**
      * {@inheritdoc}
      */
-    public function get(string $platform, array $filters = []): array
+    public function get(string $platform, string $value, string $key = 'nameOnPlatform'): array
     {
-        // filters only accept 3 keys: nameOnPlatform, idOnPlatform, userId
+        // 3 accepted keys: nameOnPlatform, idOnPlatform, userId
         $acceptedFilterKeys = [
             'nameOnPlatform',
             'idOnPlatform',
             'userId'
         ];
-        foreach ($filters as $key => $value) {
-            if (!in_array($key, $acceptedFilterKeys)) {
-                throw new ApiException(sprintf('"%s" doesn\'t exists as filter key.', $key));
-            }
-        }
-
-        // only one filter is accepted at a time
-        if (count($filters) > 1) {
-            throw new ApiException(sprintf('Only one filter is accepted at a time. Among the following filters: %s.', implode(', ', $acceptedFilterKeys)));
+        if (!in_array($key, $acceptedFilterKeys)) {
+            throw new ApiException(sprintf('"%s" doesn\'t exists as valid key.', $key));
         }
 
         $parameters = [
-            'platformType' => constant(PlatformType::class.'::_PROFILES_'.$platform)
+            'platformType' => constant(PlatformType::class.'::_PROFILES_'.$platform),
+            $key => $value
         ];
-        $parameters = array_merge($filters, $parameters);
-
         return $this->resourceClient->getResource(self::URL, $parameters);
     }
 }

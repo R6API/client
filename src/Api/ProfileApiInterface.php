@@ -14,9 +14,10 @@ interface ProfileApiInterface
      * @param string $platform  Platform to use for this request
      * @see PlatformType
      *
-     * @param array $filters    Filters to apply on this query
+     * @param string $value
+     * @param string $key
      *
      * @return array
      */
-    public function get(string $platform, array $filters = []): array;
+    public function get(string $platform, string $value, string $key = 'nameOnPlatform'): array;
 }

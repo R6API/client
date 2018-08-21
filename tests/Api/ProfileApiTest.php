@@ -11,7 +11,7 @@ class ProfileApiTest extends ApiTestCase
 {
     public function testSimpleSearch()
     {
-        $response = $this->client->getProfileApi()->get(PlatformType::PC, ['nameOnPlatform' => 'panda_______']);
+        $response = $this->client->getProfileApi()->get(PlatformType::PC, 'panda_______');
 
         $this->assertArrayHasKey('profiles', $response);
 
@@ -24,19 +24,10 @@ class ProfileApiTest extends ApiTestCase
 
     /**
      * @expectedException \R6API\Client\Exception\ApiException
-     * @expectedExceptionMessage "foo" doesn't exists as filter key.
+     * @expectedExceptionMessage "bar" doesn't exists as valid key.
      */
     public function testInvalidFilter()
     {
-        $this->client->getProfileApi()->get(PlatformType::PC, ['foo' => 'bar']);
-    }
-
-    /**
-     * @expectedException \R6API\Client\Exception\ApiException
-     * @expectedExceptionMessage Only one filter is accepted at a time. Among the following filters: nameOnPlatform, idOnPlatform, userId.
-     */
-    public function testTooMuchFilters()
-    {
-        $this->client->getProfileApi()->get(PlatformType::PC, ['nameOnPlatform' => 'foo', 'idOnPlatform' => 0]);
+        $this->client->getProfileApi()->get(PlatformType::PC, 'foo', 'bar');
     }
 }
