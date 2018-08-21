@@ -11,5 +11,6 @@ require_once __DIR__.'/vendor/autoload.php';
 use R6API\Client\ClientBuilder;
 
 $builder = new ClientBuilder();
+$builder->setCacheItemPool($cacheItemPool); // accept PSR-6 adapter
 $client = $builder->buildAuthenticated('%email%', '%password%');
 ```
