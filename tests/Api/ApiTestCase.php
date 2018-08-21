@@ -21,7 +21,7 @@ abstract class ApiTestCase extends TestCase
 
     public function setUp()
     {
-        $cacheItemPool = new PredisCachePool(new Client());
+        $cacheItemPool = new PredisCachePool(new Client(getenv('REDIS_URI')));
 
         $this->builder = new ClientBuilder();
         $this->builder->setCacheItemPool($cacheItemPool);

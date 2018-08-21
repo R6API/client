@@ -21,7 +21,7 @@ class AuthenticationApiTest extends TestCase
     {
         $httpClient = HttpClientDiscovery::find();
         $requestFactory = MessageFactoryDiscovery::find();
-        $cacheItemPool = new PredisCachePool(new Client());
+        $cacheItemPool = new PredisCachePool(new Client(getenv('REDIS_URI')));
 
         $httpClient = new ApiHttpClient($httpClient, $requestFactory);
         $uriAuthGenerator = new UriGenerator('https://uplayconnect.ubi.com/');

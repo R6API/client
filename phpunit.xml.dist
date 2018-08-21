@@ -11,6 +11,8 @@
     stopOnFailure="false">
 
     <php>
+        <env name="REDIS_URI" value="tcp://127.0.0.1:6379" />
+
         <env name="CLIENT_EMAIL" value="" />
         <env name="CLIENT_PASSWORD" value="" />
     </php>
