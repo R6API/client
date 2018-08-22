@@ -32,6 +32,11 @@ class StatisticApi implements StatisticApiInterface
      */
     public function get(string $platform, array $profileIds, array $statistics): array
     {
+        // check $platform is part of PlatformType enum
+        if (!PlatformType::isValidValue($platform)) {
+            throw new ApiException(sprintf('"%s" isn\'t a valid value from PlatformType enum.', $platform));
+        }
+
         // check if $profileIds parameter contains only UUID
         foreach ($profileIds as $profileId) {
             if (!preg_match('#[0-9a-f]{8}-[0-9a-f]{4}-4[0-9A-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}#', $profileId)) {
