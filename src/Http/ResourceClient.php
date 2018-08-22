@@ -40,45 +40,4 @@ class ResourceClient implements ResourceClientInterface
 
         return json_decode($response->getBody()->getContents(), true);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function createResource(string $uri, array $uriParameters = [], array $body = [])
-    {
-        unset($body['_links']);
-
-        $uri = $this->uriGenerator->generate($uri, $uriParameters);
-        $response = $this->httpClient->sendRequest(
-            'POST',
-            $uri,
-            ['Content-Type' => 'application/json'],
-            json_encode($body)
-        );
-
-        return $response->getStatusCode();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function deleteResource(string $uri, array $uriParameters = [])
-    {
-        $uri = $this->uriGenerator->generate($uri, $uriParameters);
-
-        $response = $this->httpClient->sendRequest('DELETE', $uri);
-
-        return $response->getStatusCode();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getStreamedResource(string $uri, array $uriParameters = [])
-    {
-        $uri = $this->uriGenerator->generate($uri, $uriParameters);
-        $response = $this->httpClient->sendRequest('GET', $uri, ['Accept' => '*/*']);
-
-        return $response->getBody();
-    }
 }
