@@ -17,9 +17,12 @@ interface RankApiInterface
      * @param string $region
      * @see \R6API\Client\Api\Type\RegionType
      *
+     * @param string $season
+     * @see \R6API\Client\Api\Type\SeasonType
+     *
      * @param array $profileIds
      *
      * @return array
      */
-    public function get(string $platform, string $region, array $profileIds): array;
+    public function get(string $platform, string $region, string $season, array $profileIds): array;
 }

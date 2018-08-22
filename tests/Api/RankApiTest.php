@@ -4,6 +4,7 @@ namespace R6API\Client\tests\Api;
 
 use R6API\Client\Api\Type\PlatformType;
 use R6API\Client\Api\Type\RegionType;
+use R6API\Client\Api\Type\SeasonType;
 
 /**
  * @author Baptiste Leduc <baptiste.leduc@gmail.com>
@@ -13,7 +14,7 @@ class RankApiTest extends ApiTestCase
     public function testSimpleSearch()
     {
         $profileId = '575b8c76-a33a-4c19-9618-d14b9343d527';
-        $response = $this->client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, [$profileId]);
+        $response = $this->client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, SeasonType::CURRENT, [$profileId]);
 
         $this->assertArrayHasKey('players', $response);
 
@@ -44,7 +45,7 @@ class RankApiTest extends ApiTestCase
      */
     public function testExceptionPlatform()
     {
-        $this->client->getRankApi()->get('switch', RegionType::EUROPE, ['575b8c76-a33a-4c19-9618-d14b9343d527']);
+        $this->client->getRankApi()->get('switch', RegionType::EUROPE, SeasonType::CURRENT, ['575b8c76-a33a-4c19-9618-d14b9343d527']);
     }
 
     /**
@@ -53,7 +54,16 @@ class RankApiTest extends ApiTestCase
      */
     public function testExceptionRegion()
     {
-        $this->client->getRankApi()->get(PlatformType::PC, 'atlantis', ['575b8c76-a33a-4c19-9618-d14b9343d527']);
+        $this->client->getRankApi()->get(PlatformType::PC, 'atlantis', SeasonType::CURRENT, ['575b8c76-a33a-4c19-9618-d14b9343d527']);
+    }
+
+    /**
+     * @expectedException \R6API\Client\Exception\ApiException
+     * @expectedExceptionMessage "Y3S2" isn't a valid value from SeasonType enum.
+     */
+    public function testExceptionSeason()
+    {
+        $this->client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, 'Y3S2', ['575b8c76-a33a-4c19-9618-d14b9343d527']);
     }
 
     /**
@@ -62,6 +72,6 @@ class RankApiTest extends ApiTestCase
      */
     public function testExceptionProfileIds()
     {
-        $this->client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, ['foo']);
+        $this->client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, SeasonType::CURRENT, ['foo']);
     }
 }

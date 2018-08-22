@@ -5,6 +5,7 @@ namespace R6API\Client\Api;
 
 use R6API\Client\Api\Type\PlatformType;
 use R6API\Client\Api\Type\RegionType;
+use R6API\Client\Api\Type\SeasonType;
 use R6API\Client\Exception\ApiException;
 
 /**
@@ -19,7 +20,7 @@ class RankApi extends AbstractApi implements RankApiInterface
     /**
      * {@inheritdoc}
      */
-    public function get(string $platform, string $region, array $profileIds): array
+    public function get(string $platform, string $region, string $season, array $profileIds): array
     {
         $parameters = [];
 
@@ -39,8 +40,10 @@ class RankApi extends AbstractApi implements RankApiInterface
         $parameters['region_id'] = $region;
 
         // season_id
-        // @TODO improve implementation
-        $parameters['season_id'] = "-1";
+        if (!SeasonType::isValidValue($season)) {
+            throw new ApiException(sprintf('"%s" isn\'t a valid value from SeasonType enum.', $season));
+        }
+        $parameters['season_id'] = $season;
 
         // profile_ids
         // check if $profileIds parameter contains only UUID
