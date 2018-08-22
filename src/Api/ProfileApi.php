@@ -32,6 +32,11 @@ class ProfileApi implements ProfileApiInterface
      */
     public function get(string $platform, string $value, string $key = 'nameOnPlatform'): array
     {
+        // check $platform is part of PlatformType enum
+        if (!PlatformType::isValidValue($platform)) {
+            throw new ApiException(sprintf('"%s" isn\'t a valid value from PlatformType enum.', $platform));
+        }
+
         // 3 accepted keys: nameOnPlatform, idOnPlatform, userId
         $acceptedFilterKeys = [
             'nameOnPlatform',

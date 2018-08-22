@@ -24,6 +24,15 @@ class ProfileApiTest extends ApiTestCase
 
     /**
      * @expectedException \R6API\Client\Exception\ApiException
+     * @expectedExceptionMessage "switch" isn't a valid value from PlatformType enum.
+     */
+    public function testExceptionPlatformType()
+    {
+        $this->client->getProfileApi()->get('switch', 'panda_______');
+    }
+
+    /**
+     * @expectedException \R6API\Client\Exception\ApiException
      * @expectedExceptionMessage "bar" doesn't exists as valid key.
      */
     public function testInvalidFilter()
