@@ -6,27 +6,15 @@ namespace R6API\Client\Api;
 use R6API\Client\Api\Type\PlatformType;
 use R6API\Client\Api\Type\RegionType;
 use R6API\Client\Exception\ApiException;
-use R6API\Client\Http\ResourceClientInterface;
 
 /**
  * API implementation to manage the ranks.
  *
  * @author Baptiste Leduc <baptiste.leduc@gmail.com>
  */
-class RankApi implements RankApiInterface
+class RankApi extends AbstractApi implements RankApiInterface
 {
     const URL = '/v1/spaces/%%platform%%/r6karma/players';
-
-    /** @var ResourceClientInterface */
-    protected $resourceClient;
-
-    /**
-     * @param ResourceClientInterface $resourceClient
-     */
-    public function __construct(ResourceClientInterface $resourceClient)
-    {
-        $this->resourceClient = $resourceClient;
-    }
 
     /**
      * {@inheritdoc}
@@ -51,6 +39,7 @@ class RankApi implements RankApiInterface
         $parameters['region_id'] = $region;
 
         // season_id
+        // @TODO improve implementation
         $parameters['season_id'] = "-1";
 
         // profile_ids

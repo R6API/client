@@ -5,27 +5,15 @@ namespace R6API\Client\Api;
 
 use R6API\Client\Api\Type\PlatformType;
 use R6API\Client\Exception\ApiException;
-use R6API\Client\Http\ResourceClientInterface;
 
 /**
  * API implementation to manage the profiles.
  *
  * @author Baptiste Leduc <baptiste.leduc@gmail.com>
  */
-class ProfileApi implements ProfileApiInterface
+class ProfileApi extends AbstractApi implements ProfileApiInterface
 {
     const URL = '/v2/profiles';
-
-    /** @var ResourceClientInterface */
-    protected $resourceClient;
-
-    /**
-     * @param ResourceClientInterface $resourceClient
-     */
-    public function __construct(ResourceClientInterface $resourceClient)
-    {
-        $this->resourceClient = $resourceClient;
-    }
 
     /**
      * {@inheritdoc}

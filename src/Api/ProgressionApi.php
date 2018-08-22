@@ -5,27 +5,15 @@ namespace R6API\Client\Api;
 
 use R6API\Client\Api\Type\PlatformType;
 use R6API\Client\Exception\ApiException;
-use R6API\Client\Http\ResourceClientInterface;
 
 /**
  * API implementation to manage the profiles.
  *
  * @author Baptiste Leduc <baptiste.leduc@gmail.com>
  */
-class ProgressionApi implements ProgressionApiInterface
+class ProgressionApi extends AbstractApi implements ProgressionApiInterface
 {
     const URL = '/v1/spaces/%%platform%%/r6playerprofile/playerprofile/progressions';
-
-    /** @var ResourceClientInterface */
-    protected $resourceClient;
-
-    /**
-     * @param ResourceClientInterface $resourceClient
-     */
-    public function __construct(ResourceClientInterface $resourceClient)
-    {
-        $this->resourceClient = $resourceClient;
-    }
 
     /**
      * {@inheritdoc}
