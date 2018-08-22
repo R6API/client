@@ -5,7 +5,7 @@ namespace R6API\Client;
 
 use R6API\Client\Api\ProfileApiInterface;
 use R6API\Client\Api\ProgressionApiInterface;
-use R6API\Client\Api\StatisticApi;
+use R6API\Client\Api\RankApiInterface;
 use R6API\Client\Api\StatisticApiInterface;
 use R6API\Client\Security\Authentication;
 
@@ -26,22 +26,28 @@ class Client implements ClientInterface
     /** @var StatisticApiInterface */
     private $statisticApi;
 
+    /** @var RankApiInterface */
+    private $rankApi;
+
     /**
      * @param Authentication $authentication
      * @param ProfileApiInterface $profileApi
      * @param ProgressionApiInterface $progressionApi
-     * @param StatisticApi $statisticApi
+     * @param StatisticApiInterface $statisticApi
+     * @param RankApiInterface $rankApi
      */
     public function __construct(
         Authentication $authentication,
         ProfileApiInterface $profileApi,
         ProgressionApiInterface $progressionApi,
-        StatisticApi $statisticApi
+        StatisticApiInterface $statisticApi,
+        RankApiInterface $rankApi
     ) {
         $this->authentication = $authentication;
         $this->profileApi = $profileApi;
         $this->progressionApi = $progressionApi;
         $this->statisticApi = $statisticApi;
+        $this->rankApi = $rankApi;
     }
 
     /**
@@ -74,5 +80,13 @@ class Client implements ClientInterface
     public function getStatisticApi(): StatisticApiInterface
     {
         return $this->statisticApi;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRankApi(): RankApiInterface
+    {
+        return $this->rankApi;
     }
 }

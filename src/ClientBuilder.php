@@ -8,6 +8,7 @@ use Psr\Cache\CacheItemPoolInterface;
 use R6API\Client\Api\AuthenticationApi;
 use R6API\Client\Api\ProfileApi;
 use R6API\Client\Api\ProgressionApi;
+use R6API\Client\Api\RankApi;
 use R6API\Client\Api\StatisticApi;
 use R6API\Client\Http\AuthenticatedHttpClient;
 use R6API\Client\Http\HttpClient as ApiHttpClient;
@@ -137,7 +138,8 @@ class ClientBuilder
             $authentication,
             new ProfileApi($resourceClient),
             new ProgressionApi($resourceClient),
-            new StatisticApi($resourceClient)
+            new StatisticApi($resourceClient),
+            new RankApi($resourceClient)
         );
 
         return $client;

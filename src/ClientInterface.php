@@ -5,6 +5,7 @@ namespace R6API\Client;
 
 use R6API\Client\Api\ProfileApiInterface;
 use R6API\Client\Api\ProgressionApiInterface;
+use R6API\Client\Api\RankApiInterface;
 use R6API\Client\Api\StatisticApiInterface;
 
 /**
@@ -39,4 +40,11 @@ interface ClientInterface
      * @return StatisticApiInterface
      */
     public function getStatisticApi(): StatisticApiInterface;
+
+    /**
+     * Gets the statistic API
+     *
+     * @return RankApiInterface
+     */
+    public function getRankApi(): RankApiInterface;
 }
