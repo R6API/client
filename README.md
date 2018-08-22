@@ -9,8 +9,12 @@
 require_once __DIR__.'/vendor/autoload.php';
 
 use R6API\Client\ClientBuilder;
+use R6API\Client\Api\Type\PlatformType;
 
 $builder = new ClientBuilder();
-$builder->setCacheItemPool($cacheItemPool); // accept PSR-6 adapter
+$builder->setCacheItemPool($cacheItemPool); // accept PSR-6 adapter (not mandatory)
 $client = $builder->buildAuthenticated('%email%', '%password%');
+
+// get profile for character called `panda_______`
+$client->getProfileApi()->get(PlatformType::PC, 'panda_______');
 ```
