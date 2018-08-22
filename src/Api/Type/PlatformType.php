@@ -3,12 +3,14 @@ declare(strict_types=1);
 
 namespace R6API\Client\Api\Type;
 
+use Greg0ire\Enum\AbstractEnum;
+
 /**
  * API Platform types.
  *
  * @author Baptiste Leduc <baptiste.leduc@gmail.com>
  */
-abstract class PlatformType
+final class PlatformType extends AbstractEnum
 {
     /**
      * Use this constants for your requests

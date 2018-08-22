@@ -21,7 +21,8 @@
         "php-http/discovery": "^1.0",
         "php-http/message-factory": "^v1.0",
         "php-http/client-implementation": "^1.0",
-        "psr/cache": "^1.0"
+        "psr/cache": "^1.0",
+        "greg0ire/enum": "^4.0"
     },
     "require-dev": {
         "php-http/guzzle6-adapter": "^1.1",
