@@ -5,6 +5,7 @@ namespace R6API\Client;
 
 use R6API\Client\Api\ProfileApiInterface;
 use R6API\Client\Api\ProgressionApiInterface;
+use R6API\Client\Api\StatisticApiInterface;
 
 /**
  * @author Baptiste Leduc <baptiste.leduc@gmail.com>
@@ -31,4 +32,11 @@ interface ClientInterface
      * @return ProgressionApiInterface
      */
     public function getProgressionApi(): ProgressionApiInterface;
+
+    /**
+     * Gets the statistic API
+     *
+     * @return StatisticApiInterface
+     */
+    public function getStatisticApi(): StatisticApiInterface;
 }
