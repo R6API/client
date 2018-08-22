@@ -74,4 +74,24 @@ class RankApiTest extends ApiTestCase
     {
         $this->client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, SeasonType::CURRENT, ['foo']);
     }
+
+    public function testSeasons()
+    {
+        $profileId = '575b8c76-a33a-4c19-9618-d14b9343d527';
+
+        $response = $this->client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, SeasonType::CURRENT, [$profileId]);
+        $this->assertArrayHasKey('players', $response);
+
+        $response = $this->client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, SeasonType::Y3S1, [$profileId]);
+        $this->assertArrayHasKey('players', $response);
+
+        $response = $this->client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, SeasonType::Y3S2, [$profileId]);
+        $this->assertArrayHasKey('players', $response);
+
+        $response = $this->client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, SeasonType::Y2S4, [$profileId]);
+        $this->assertArrayHasKey('players', $response);
+
+        $response = $this->client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, SeasonType::Y2S3, [$profileId]);
+        $this->assertArrayHasKey('players', $response);
+    }
 }

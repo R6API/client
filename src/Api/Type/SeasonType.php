@@ -7,6 +7,8 @@ use Greg0ire\Enum\AbstractEnum;
 
 /**
  * API season types.
+ * Seasons older than Y2S3 won't actually work.
+ * Ubisoft said they were "working on it"
  *
  * @author Baptiste Leduc <baptiste.leduc@gmail.com>
  */
