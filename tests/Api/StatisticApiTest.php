@@ -40,7 +40,16 @@ class StatisticApiTest extends ApiTestCase
      */
     public function testExceptionPlatformType()
     {
-        $this->client->getProfileApi()->get('switch', 'panda_______');
+        $this->client->getStatisticApi()->get('switch', ['panda_______'], [StatisticType::CASUAL_TIMEPLAYED]);
+    }
+
+    /**
+     * @expectedException \R6API\Client\Exception\ApiException
+     * @expectedExceptionMessage "foo" isn't a valid value from StatisticType enum.
+     */
+    public function testExceptionStatisticType()
+    {
+        $this->client->getStatisticApi()->get(PlatformType::PC, ['a997cc50-8bd7-46fb-bdda-ca028abd5faf'], ['foo']);
     }
 
     /**

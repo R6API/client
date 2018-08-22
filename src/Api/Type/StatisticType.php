@@ -3,12 +3,14 @@ declare(strict_types=1);
 
 namespace R6API\Client\Api\Type;
 
+use Greg0ire\Enum\AbstractEnum;
+
 /**
  * API region types.
  *
  * @author Baptiste Leduc <baptiste.leduc@gmail.com>
  */
-abstract class StatisticType
+final class StatisticType extends AbstractEnum
 {
     /**
      * Mode: Terrorist Hunt

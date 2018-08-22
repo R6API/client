@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace R6API\Client\Api;
 
 use R6API\Client\Api\Type\PlatformType;
+use R6API\Client\Api\Type\StatisticType;
 use R6API\Client\Exception\ApiException;
 use R6API\Client\Http\ResourceClientInterface;
 
@@ -41,6 +42,13 @@ class StatisticApi implements StatisticApiInterface
         foreach ($profileIds as $profileId) {
             if (!preg_match('#[0-9a-f]{8}-[0-9a-f]{4}-4[0-9A-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}#', $profileId)) {
                 throw new ApiException('"$profileIds" field require an UUID as value.');
+            }
+        }
+
+        // check if $statistics parameter contains only values from StatisticType
+        foreach ($statistics as $statistic) {
+            if (!StatisticType::isValidValue($statistic)) {
+                throw new ApiException(sprintf('"%s" isn\'t a valid value from StatisticType enum.', $statistic));
             }
         }
 
