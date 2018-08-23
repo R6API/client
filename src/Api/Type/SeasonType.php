@@ -19,22 +19,22 @@ final class SeasonType extends AbstractEnum
     /**
      * Year 1
      */
-    const Y1S1 = "0";
-    const Y1S2 = "1";
-    const Y1S3 = "2";
-    const Y1S4 = "3";
+    const Y1S1 = "1";
+    const Y1S2 = "2";
+    const Y1S3 = "3";
+    const Y1S4 = "4";
 
     /**
      * Year 2
      */
-    const Y2S1 = "4";
-    const Y2S2 = "5";
-    const Y2S3 = "6";
-    const Y2S4 = "7";
+    const Y2S1 = "5";
+    const Y2S2 = "6";
+    const Y2S3 = "7";
+    const Y2S4 = "8";
 
     /**
      * Year 3
      */
-    const Y3S1 = "8";
-    const Y3S2 = "9";
+    const Y3S1 = "9";
+    const Y3S2 = "10";
 }
