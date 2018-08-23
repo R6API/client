@@ -11,7 +11,7 @@ class ProgressionApiTest extends ApiTestCase
 {
     public function testSimpleSearch()
     {
-        $response = $this->client->getProgressionApi()->get(PlatformType::PC, ['575b8c76-a33a-4c19-9618-d14b9343d527']);
+        $response = $this->client->getProgressionApi()->get(PlatformType::PC, [$this->profileIds[0]]);
 
         $this->assertArrayHasKey('player_profiles', $response);
 
@@ -19,6 +19,23 @@ class ProgressionApiTest extends ApiTestCase
         $this->assertArrayHasKey('profile_id', $response['player_profiles'][0]);
         $this->assertArrayHasKey('lootbox_probability', $response['player_profiles'][0]);
         $this->assertArrayHasKey('level', $response['player_profiles'][0]);
+    }
+
+    public function testMultipleSearch()
+    {
+        $response = $this->client->getProgressionApi()->get(PlatformType::PC, $this->profileIds);
+
+        $this->assertArrayHasKey('player_profiles', $response);
+
+        $count = count($this->profileIds);
+        for ($i = 0; $i < $count; ++$i) {
+            $this->assertArrayHasKey('xp', $response['player_profiles'][$i]);
+            $this->assertArrayHasKey('profile_id', $response['player_profiles'][$i]);
+            $this->assertArrayHasKey('lootbox_probability', $response['player_profiles'][$i]);
+            $this->assertArrayHasKey('level', $response['player_profiles'][$i]);
+
+            $this->assertTrue(in_array($response['player_profiles'][$i]['profile_id'], $this->profileIds));
+        }
     }
 
     /**
