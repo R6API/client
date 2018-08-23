@@ -10,27 +10,43 @@ use R6API\Client\Api\Type\StatisticType;
  */
 class StatisticApiTest extends ApiTestCase
 {
+    /** @var array */
+    protected $statistics = [
+        StatisticType::CASUAL_TIMEPLAYED,
+        StatisticType::CASUAL_MATCHPLAYED,
+        StatisticType::CASUAL_MATCHWON,
+        StatisticType::CASUAL_MATCHLOSTS,
+        StatisticType::CASUAL_KILLS,
+        StatisticType::CASUAL_DEATH
+    ];
+
     public function testSimpleSearch()
     {
-        $profileId = 'a997cc50-8bd7-46fb-bdda-ca028abd5faf';
-        $statistics = [
-            StatisticType::CASUAL_TIMEPLAYED,
-            StatisticType::CASUAL_MATCHPLAYED,
-            StatisticType::CASUAL_MATCHWON,
-            StatisticType::CASUAL_MATCHLOSTS,
-            StatisticType::CASUAL_KILLS,
-            StatisticType::CASUAL_DEATH
-        ];
-
         $response = $this->client->getStatisticApi()->get(
             PlatformType::PC,
-            [$profileId],
-            $statistics
+            [$this->profileIds[0]],
+            $this->statistics
         );
 
         $this->assertArrayHasKey('results', $response);
-        foreach ($statistics as $statistic) {
-            $this->assertArrayHasKey($statistic, $response['results'][$profileId]);
+        foreach ($this->statistics as $statistic) {
+            $this->assertArrayHasKey($statistic, $response['results'][$this->profileIds[0]]);
+        }
+    }
+
+    public function testMultipleSearch()
+    {
+        $response = $this->client->getStatisticApi()->get(
+            PlatformType::PC,
+            $this->profileIds,
+            $this->statistics
+        );
+
+        $this->assertArrayHasKey('results', $response);
+        foreach ($this->profileIds as $profileId) {
+            foreach ($this->statistics as $statistic) {
+                $this->assertArrayHasKey($statistic, $response['results'][$profileId]);
+            }
         }
     }
 
