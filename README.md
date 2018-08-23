@@ -39,6 +39,11 @@ Look for profile of an user called `panda_______`
 ```php
 $response = $client->getProfileApi()->get(PlatformType::PC, 'panda_______');
 ```
+| Parameters | Value               | Checks                                                    |
+|------------|---------------------|-----------------------------------------------------------|
+| `$platform`| Platform to look at | Check \R6API\Client\Api\Type\PlatformType                 |
+| `$value`   | Value to search     | No real restrictions here                                 |
+| `$key`     | Key to search       | Possible values are: nameOnPlatform, idOnPlatform, userId |
 
 `$response` will contains:
 ```
@@ -67,6 +72,10 @@ Progression for user we searched in Profile example:
 ```php
 $response = $client->getProgressionApi()->get(PlatformType::PC, ['575b8c76-a33a-4c19-9618-d14b9343d527']);
 ```
+| Parameters    | Value               | Checks                                                    |
+|---------------|---------------------|-----------------------------------------------------------|
+| `$platform`   | Platform to look at | Check \R6API\Client\Api\Type\PlatformType                 |
+| `$profileIds` | Profiles to search  | Search by `profileId`, each one should be UUID            |
 
 `$response` will contains:
 ```
@@ -93,6 +102,12 @@ Rank for user we searched in Profile example:
 ```php
 $response = $client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, SeasonType::CURRENT, ['575b8c76-a33a-4c19-9618-d14b9343d527']);
 ```
+| Parameters    | Value               | Checks                                                    |
+|---------------|---------------------|-----------------------------------------------------------|
+| `$platform`   | Platform to look at | Check \R6API\Client\Api\Type\PlatformType                 |
+| `$region`     | Region to filter    | Check \R6API\Client\Api\Type\RegionType                   |
+| `$season`     | Season to look at   | Check \R6API\Client\Api\Type\SeasonType                   |
+| `$profileIds` | Profiles to search  | Search by `profileId`, each one should be UUID            |
 
 `$response` will contains:
 ```
@@ -158,6 +173,11 @@ $statistics = [
 
 $response = $client->getStatisticApi()->get(PlatformType::PC, ['575b8c76-a33a-4c19-9618-d14b9343d527'], $statistics);
 ```
+| Parameters    | Value               | Checks                                                       |
+|---------------|---------------------|--------------------------------------------------------------|
+| `$platform`   | Platform to look at | Check \R6API\Client\Api\Type\PlatformType                    |
+| `$profileIds` | Profiles to search  | Search by `profileId`, each one should be UUID               |
+| `$statistics` | Statistic to filter | Check \R6API\Client\Api\Type\StatisticType, this is an array |
 
 `$response` will contains:
 ```
