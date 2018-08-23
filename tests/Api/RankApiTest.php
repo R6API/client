@@ -13,30 +13,60 @@ class RankApiTest extends ApiTestCase
 {
     public function testSimpleSearch()
     {
-        $profileId = '575b8c76-a33a-4c19-9618-d14b9343d527';
-        $response = $this->client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, SeasonType::CURRENT, [$profileId]);
+        $response = $this->client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, SeasonType::CURRENT, [$this->profileIds[0]]);
 
         $this->assertArrayHasKey('players', $response);
 
-        $this->assertArrayHasKey('board_id', $response['players'][$profileId]);
-        $this->assertArrayHasKey('past_seasons_abandons', $response['players'][$profileId]);
-        $this->assertArrayHasKey('update_time', $response['players'][$profileId]);
-        $this->assertArrayHasKey('skill_mean', $response['players'][$profileId]);
-        $this->assertArrayHasKey('abandons', $response['players'][$profileId]);
-        $this->assertArrayHasKey('season', $response['players'][$profileId]);
-        $this->assertArrayHasKey('region', $response['players'][$profileId]);
-        $this->assertArrayHasKey('profile_id', $response['players'][$profileId]);
-        $this->assertArrayHasKey('past_seasons_losses', $response['players'][$profileId]);
-        $this->assertArrayHasKey('max_mmr', $response['players'][$profileId]);
-        $this->assertArrayHasKey('mmr', $response['players'][$profileId]);
-        $this->assertArrayHasKey('wins', $response['players'][$profileId]);
-        $this->assertArrayHasKey('skill_stdev', $response['players'][$profileId]);
-        $this->assertArrayHasKey('rank', $response['players'][$profileId]);
-        $this->assertArrayHasKey('losses', $response['players'][$profileId]);
-        $this->assertArrayHasKey('next_rank_mmr', $response['players'][$profileId]);
-        $this->assertArrayHasKey('past_seasons_wins', $response['players'][$profileId]);
-        $this->assertArrayHasKey('previous_rank_mmr', $response['players'][$profileId]);
-        $this->assertArrayHasKey('max_rank', $response['players'][$profileId]);
+        $this->assertArrayHasKey('board_id', $response['players'][$this->profileIds[0]]);
+        $this->assertArrayHasKey('past_seasons_abandons', $response['players'][$this->profileIds[0]]);
+        $this->assertArrayHasKey('update_time', $response['players'][$this->profileIds[0]]);
+        $this->assertArrayHasKey('skill_mean', $response['players'][$this->profileIds[0]]);
+        $this->assertArrayHasKey('abandons', $response['players'][$this->profileIds[0]]);
+        $this->assertArrayHasKey('season', $response['players'][$this->profileIds[0]]);
+        $this->assertArrayHasKey('region', $response['players'][$this->profileIds[0]]);
+        $this->assertArrayHasKey('profile_id', $response['players'][$this->profileIds[0]]);
+        $this->assertArrayHasKey('past_seasons_losses', $response['players'][$this->profileIds[0]]);
+        $this->assertArrayHasKey('max_mmr', $response['players'][$this->profileIds[0]]);
+        $this->assertArrayHasKey('mmr', $response['players'][$this->profileIds[0]]);
+        $this->assertArrayHasKey('wins', $response['players'][$this->profileIds[0]]);
+        $this->assertArrayHasKey('skill_stdev', $response['players'][$this->profileIds[0]]);
+        $this->assertArrayHasKey('rank', $response['players'][$this->profileIds[0]]);
+        $this->assertArrayHasKey('losses', $response['players'][$this->profileIds[0]]);
+        $this->assertArrayHasKey('next_rank_mmr', $response['players'][$this->profileIds[0]]);
+        $this->assertArrayHasKey('past_seasons_wins', $response['players'][$this->profileIds[0]]);
+        $this->assertArrayHasKey('previous_rank_mmr', $response['players'][$this->profileIds[0]]);
+        $this->assertArrayHasKey('max_rank', $response['players'][$this->profileIds[0]]);
+    }
+
+    public function testMultipleSearch()
+    {
+        $response = $this->client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, SeasonType::CURRENT, $this->profileIds);
+
+        $this->assertArrayHasKey('players', $response);
+
+        foreach ($response['players'] as $profileId => $details) {
+            $this->assertArrayHasKey('board_id', $details);
+            $this->assertArrayHasKey('past_seasons_abandons', $details);
+            $this->assertArrayHasKey('update_time', $details);
+            $this->assertArrayHasKey('skill_mean', $details);
+            $this->assertArrayHasKey('abandons', $details);
+            $this->assertArrayHasKey('season', $details);
+            $this->assertArrayHasKey('region', $details);
+            $this->assertArrayHasKey('profile_id', $details);
+            $this->assertArrayHasKey('past_seasons_losses', $details);
+            $this->assertArrayHasKey('max_mmr', $details);
+            $this->assertArrayHasKey('mmr', $details);
+            $this->assertArrayHasKey('wins', $details);
+            $this->assertArrayHasKey('skill_stdev', $details);
+            $this->assertArrayHasKey('rank', $details);
+            $this->assertArrayHasKey('losses', $details);
+            $this->assertArrayHasKey('next_rank_mmr', $details);
+            $this->assertArrayHasKey('past_seasons_wins', $details);
+            $this->assertArrayHasKey('previous_rank_mmr', $details);
+            $this->assertArrayHasKey('max_rank', $details);
+
+            $this->assertTrue(in_array($details['profile_id'], $this->profileIds));
+        }
     }
 
     /**
@@ -45,7 +75,7 @@ class RankApiTest extends ApiTestCase
      */
     public function testExceptionPlatform()
     {
-        $this->client->getRankApi()->get('switch', RegionType::EUROPE, SeasonType::CURRENT, ['575b8c76-a33a-4c19-9618-d14b9343d527']);
+        $this->client->getRankApi()->get('switch', RegionType::EUROPE, SeasonType::CURRENT, [$this->profileIds[0]]);
     }
 
     /**
@@ -54,7 +84,7 @@ class RankApiTest extends ApiTestCase
      */
     public function testExceptionRegion()
     {
-        $this->client->getRankApi()->get(PlatformType::PC, 'atlantis', SeasonType::CURRENT, ['575b8c76-a33a-4c19-9618-d14b9343d527']);
+        $this->client->getRankApi()->get(PlatformType::PC, 'atlantis', SeasonType::CURRENT, [$this->profileIds[0]]);
     }
 
     /**
@@ -63,7 +93,7 @@ class RankApiTest extends ApiTestCase
      */
     public function testExceptionSeason()
     {
-        $this->client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, 'Y3S2', ['575b8c76-a33a-4c19-9618-d14b9343d527']);
+        $this->client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, 'Y3S2', [$this->profileIds[0]]);
     }
 
     /**
@@ -77,21 +107,19 @@ class RankApiTest extends ApiTestCase
 
     public function testSeasons()
     {
-        $profileId = '575b8c76-a33a-4c19-9618-d14b9343d527';
-
-        $response = $this->client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, SeasonType::CURRENT, [$profileId]);
+        $response = $this->client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, SeasonType::CURRENT, [$this->profileIds[0]]);
         $this->assertArrayHasKey('players', $response);
 
-        $response = $this->client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, SeasonType::Y3S1, [$profileId]);
+        $response = $this->client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, SeasonType::Y3S1, [$this->profileIds[0]]);
         $this->assertArrayHasKey('players', $response);
 
-        $response = $this->client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, SeasonType::Y3S2, [$profileId]);
+        $response = $this->client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, SeasonType::Y3S2, [$this->profileIds[0]]);
         $this->assertArrayHasKey('players', $response);
 
-        $response = $this->client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, SeasonType::Y2S4, [$profileId]);
+        $response = $this->client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, SeasonType::Y2S4, [$this->profileIds[0]]);
         $this->assertArrayHasKey('players', $response);
 
-        $response = $this->client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, SeasonType::Y2S3, [$profileId]);
+        $response = $this->client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, SeasonType::Y2S3, [$this->profileIds[0]]);
         $this->assertArrayHasKey('players', $response);
     }
 }
