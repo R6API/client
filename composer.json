@@ -30,6 +30,7 @@
         "cache/predis-adapter": "^1.0"
     },
     "suggest": {
+        "php-http/curl-client": "In order to use cURL as the HTTP client",
         "php-http/guzzle6-adapter": "In order to use Guzzle v6 as the HTTP client"
     }
 }

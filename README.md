@@ -11,6 +11,11 @@ You can install the library via [Composer](https://getcomposer.org/). Run the fo
 composer require r6api/client
 ```
 
+This will install the client without the needed HTTP client.
+We suggest you to install:
+- `php-http/curl-client` Simpler if you have no HTTP client on your project.
+- `php-http/guzzle6-adapter` If you already use guzzle, I suggest you using this package.
+
 To use the library, use Composer's [autoload](https://getcomposer.org/doc/01-basic-usage.md#autoloading):
 
 ```php
