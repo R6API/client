@@ -3,6 +3,8 @@
 namespace R6API\Client\tests\Api;
 
 use R6API\Client\Api\Type\PlatformType;
+use R6API\Client\Model\Profile;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @author Baptiste Leduc <baptiste.leduc@gmail.com>
@@ -11,15 +13,20 @@ class ProfileApiTest extends ApiTestCase
 {
     public function testSimpleSearch()
     {
-        $response = $this->client->getProfileApi()->get(PlatformType::PC, 'panda_______');
+        $profiles = $this->client->getProfileApi()->get(PlatformType::PC, 'panda_______');
 
-        $this->assertArrayHasKey('profiles', $response);
+        $this->assertTrue(is_array($profiles));
 
-        $this->assertArrayHasKey('profileId', $response['profiles'][0]);
-        $this->assertArrayHasKey('userId', $response['profiles'][0]);
-        $this->assertArrayHasKey('platformType', $response['profiles'][0]);
-        $this->assertArrayHasKey('idOnPlatform', $response['profiles'][0]);
-        $this->assertArrayHasKey('nameOnPlatform', $response['profiles'][0]);
+        /** @var Profile $profile */
+        $profile = $profiles[0];
+
+        $this->assertTrue($profile instanceof Profile);
+
+        $this->assertTrue($profile->profileId instanceof Uuid);
+        $this->assertTrue($profile->userId instanceof Uuid);
+        $this->assertTrue($profile->idOnPlatform instanceof Uuid);
+        $this->assertEquals(PlatformType::PC, $profile->platformType);
+        $this->assertEquals('panda_______', $profile->nameOnPlatform);
     }
 
     /**

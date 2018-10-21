@@ -19,7 +19,8 @@ class Profile
     public $userId;
 
     /**
-     * @var PlatformType
+     * @var string
+     * @see PlatformType
      */
     public $platformType;
 
