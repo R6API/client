@@ -38,6 +38,6 @@ class ResourceClient implements ResourceClientInterface
         $uri = $this->uriGenerator->generate($uri, $uriParameters, $queryParameters);
         $response = $this->httpClient->sendRequest('GET', $uri);
 
-        return json_decode($response->getBody()->getContents(), true);
+        return $response->getBody()->getContents();
     }
 }
