@@ -42,7 +42,7 @@ $client = $builder->buildAuthenticated('%email%', '%password%');
 ### Profile
 Look for profile of an user called `panda_______`
 ```php
-$response = $client->getProfileApi()->get(PlatformType::PC, 'panda_______');
+$profiles = $client->getProfileApi()->get(PlatformType::PC, 'panda_______');
 ```
 | Parameters | Value               | Checks                                                    |
 |------------|---------------------|-----------------------------------------------------------|
@@ -50,26 +50,37 @@ $response = $client->getProfileApi()->get(PlatformType::PC, 'panda_______');
 | `$value`   | Value to search     | No real restrictions here                                 |
 | `$key`     | Key to search       | Possible values are: nameOnPlatform, idOnPlatform, userId |
 
-`$response` will contains:
-```
-array(1) {
-  'profiles' =>
-  array(1) {
-    [0] =>
-    array(5) {
-      'profileId' =>
-      string(36) "575b8c76-a33a-4c19-9618-d14b9343d527"
-      'userId' =>
-      string(36) "575b8c76-a33a-4c19-9618-d14b9343d527"
-      'platformType' =>
-      string(5) "uplay"
-      'idOnPlatform' =>
-      string(36) "575B8C76-A33A-4C19-9618-D14B9343D527"
-      'nameOnPlatform' =>
-      string(12) "panda_______"
-    }
-  }
+`$profiles` will contains an array of `Profile` model:
+```php
+class Profile
+{
+    /**
+     * @var \Ramsey\Uuid\Uuid
+     */
+    public $profileId;
+
+    /**
+     * @var \Ramsey\Uuid\Uuid
+     */
+    public $userId;
+
+    /**
+     * @var string
+     * @see \R6API\Client\Api\Type\PlatformType
+     */
+    public $platformType;
+
+    /**
+     * @var \Ramsey\Uuid\Uuid
+     */
+    public $idOnPlatform;
+
+    /**
+     * @var string
+     */
+    public $nameOnPlatform;
 }
+
 ```
 
 ### Progression

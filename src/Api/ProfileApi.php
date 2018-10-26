@@ -5,6 +5,7 @@ namespace R6API\Client\Api;
 
 use R6API\Client\Api\Type\PlatformType;
 use R6API\Client\Exception\ApiException;
+use R6API\Client\Model\ProfileResponse;
 
 /**
  * API implementation to manage the profiles.
@@ -39,6 +40,12 @@ class ProfileApi extends AbstractApi implements ProfileApiInterface
             'platformType' => constant(PlatformType::class.'::_PROFILES_'.$platform),
             $key => $value
         ];
-        return $this->resourceClient->getResource(self::URL, $parameters);
+
+        $data = $this->resourceClient->getResource(self::URL, $parameters);
+        return $this->serializer->deserialize(
+            $data,
+            ProfileResponse::class,
+            'json'
+        );
     }
 }

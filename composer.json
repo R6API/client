@@ -15,6 +15,7 @@
     },
     "require": {
         "php": ">=7.1",
+        "ext-ctype": "*",
         "psr/http-message": "^1.0",
         "php-http/httplug": "^1.0",
         "php-http/message": "^1.0",
@@ -22,12 +23,18 @@
         "php-http/message-factory": "^v1.0",
         "php-http/client-implementation": "^1.0",
         "psr/cache": "^1.0",
-        "greg0ire/enum": "^4.0"
+        "greg0ire/enum": "^4.0",
+        "symfony/serializer": "^4.1",
+        "ramsey/uuid": "^3.8",
+        "symfony/property-access": "^4.1"
     },
     "require-dev": {
         "php-http/guzzle6-adapter": "^1.1",
         "phpunit/phpunit": "^7.3",
         "cache/predis-adapter": "^1.0"
+    },
+    "replace": {
+        "symfony/polyfill-ctype": "*"
     },
     "suggest": {
         "php-http/curl-client": "In order to use cURL as the HTTP client",

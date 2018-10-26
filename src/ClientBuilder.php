@@ -10,6 +10,8 @@ use R6API\Client\Api\ProfileApi;
 use R6API\Client\Api\ProgressionApi;
 use R6API\Client\Api\RankApi;
 use R6API\Client\Api\StatisticApi;
+use R6API\Client\Denormalizer\ProfileDenormalizer;
+use R6API\Client\Denormalizer\ProfileResponseDenormalizer;
 use R6API\Client\Http\AuthenticatedHttpClient;
 use R6API\Client\Http\HttpClient as ApiHttpClient;
 use Http\Discovery\HttpClientDiscovery;
@@ -18,6 +20,8 @@ use Http\Message\RequestFactory;
 use R6API\Client\Http\ResourceClient;
 use R6API\Client\Routing\UriGenerator;
 use R6API\Client\Security\Authentication;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Serializer;
 
 /**
  * This builder is in charge to instantiate and inject the dependencies.
@@ -132,14 +136,14 @@ class ClientBuilder
      */
     protected function buildAuthenticatedClient(Authentication $authentication)
     {
-        $resourceClient = $this->setUp($authentication);
+        [$resourceClient, $serializer] = $this->setUp($authentication);
 
         $client = new Client(
             $authentication,
-            new ProfileApi($resourceClient),
-            new ProgressionApi($resourceClient),
-            new StatisticApi($resourceClient),
-            new RankApi($resourceClient)
+            new ProfileApi($resourceClient, $serializer),
+            new ProgressionApi($resourceClient, $serializer),
+            new StatisticApi($resourceClient, $serializer),
+            new RankApi($resourceClient, $serializer)
         );
 
         return $client;
@@ -148,7 +152,7 @@ class ClientBuilder
     /**
      * @param Authentication $authentication
      *
-     * @return ResourceClient
+     * @return [ResourceClient, Serializer]
      */
     protected function setUp(Authentication $authentication)
     {
@@ -160,11 +164,15 @@ class ClientBuilder
         $authenticationApi = new AuthenticationApi($httpClient, $uriAuthGenerator);
         $authenticatedHttpClient = new AuthenticatedHttpClient($httpClient, $authenticationApi, $authentication);
 
+        $serializer = new Serializer([
+            new ProfileResponseDenormalizer(), new ProfileDenormalizer()
+        ], [new JsonEncoder()]);
+
         $resourceClient = new ResourceClient(
             $authenticatedHttpClient,
             $uriGenerator
         );
 
-        return $resourceClient;
+        return [$resourceClient, $serializer];
     }
 }
