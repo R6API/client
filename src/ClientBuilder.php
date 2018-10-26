@@ -12,6 +12,8 @@ use R6API\Client\Api\RankApi;
 use R6API\Client\Api\StatisticApi;
 use R6API\Client\Denormalizer\ProfileDenormalizer;
 use R6API\Client\Denormalizer\ProfileResponseDenormalizer;
+use R6API\Client\Denormalizer\ProgressionDenormalizer;
+use R6API\Client\Denormalizer\ProgressionResponseDenormalizer;
 use R6API\Client\Http\AuthenticatedHttpClient;
 use R6API\Client\Http\HttpClient as ApiHttpClient;
 use Http\Discovery\HttpClientDiscovery;
@@ -165,7 +167,10 @@ class ClientBuilder
         $authenticatedHttpClient = new AuthenticatedHttpClient($httpClient, $authenticationApi, $authentication);
 
         $serializer = new Serializer([
-            new ProfileResponseDenormalizer(), new ProfileDenormalizer()
+            new ProfileResponseDenormalizer(),
+            new ProfileDenormalizer(),
+            new ProgressionResponseDenormalizer(),
+            new ProgressionDenormalizer()
         ], [new JsonEncoder()]);
 
         $resourceClient = new ResourceClient(

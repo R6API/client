@@ -86,30 +86,38 @@ class Profile
 ### Progression
 Progression for user we searched in Profile example:
 ```php
-$response = $client->getProgressionApi()->get(PlatformType::PC, ['575b8c76-a33a-4c19-9618-d14b9343d527']);
+$progressions = $client->getProgressionApi()->get(PlatformType::PC, ['575b8c76-a33a-4c19-9618-d14b9343d527']);
 ```
 | Parameters    | Value               | Checks                                                    |
 |---------------|---------------------|-----------------------------------------------------------|
 | `$platform`   | Platform to look at | Check \R6API\Client\Api\Type\PlatformType                 |
 | `$profileIds` | Profiles to search  | Search by `profileId`, each one should be UUID            |
 
-`$response` will contains:
+`$progressions` will contains an array of `Progression` model:
 ```
-array(1) {
-  'player_profiles' =>
-  array(1) {
-    [0] =>
-    array(4) {
-      'xp' =>
-      int(11525)
-      'profile_id' =>
-      string(36) "575b8c76-a33a-4c19-9618-d14b9343d527"
-      'lootbox_probability' =>
-      int(1890)
-      'level' =>
-      int(97)
-    }
-  }
+class Progression
+{
+    /**
+     * @var int
+     */
+    public $xp;
+
+    /**
+     * @var Uuid
+     */
+    public $profileId;
+
+    /**
+     * @var int
+     */
+    public $lootboxProbability;
+
+    /**
+     * @var int
+     */
+    public $level;
+
+    public function getLootboxProbabilityPercent(): float;
 }
 ```
 
