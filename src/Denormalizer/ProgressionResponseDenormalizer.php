@@ -3,30 +3,30 @@ declare(strict_types=1);
 
 namespace R6API\Client\Denormalizer;
 
-use R6API\Client\Model\Profile;
+use R6API\Client\Model\Progression;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
-class ProfileResponseDenormalizer implements DenormalizerInterface, DenormalizerAwareInterface
+class ProgressionResponseDenormalizer implements DenormalizerInterface, DenormalizerAwareInterface
 {
     /** @var DenormalizerInterface */
     private $denormalizer;
 
     public function denormalize($data, $class, $format = null, array $context = [])
     {
-        $profiles = [];
+        $progressions = [];
 
-        foreach ($data['profiles'] as $profile) {
-            $profiles[] = $this->denormalizer->denormalize($profile, Profile::class);
+        foreach ($data['player_profiles'] as $progression) {
+            $progressions[] = $this->denormalizer->denormalize($progression, Progression::class);
         }
 
-        return $profiles;
+        return $progressions;
     }
 
     public function supportsDenormalization($data, $type, $format = null): bool
     {
-        if (Profile::class.'[]' &&
-            isset($data['profiles'])) {
+        if (Progression::class.'[]' === $type &&
+            isset($data['player_profiles'])) {
             return true;
         }
 

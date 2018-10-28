@@ -3,6 +3,8 @@
 namespace R6API\Client\tests\Api;
 
 use R6API\Client\Api\Type\PlatformType;
+use R6API\Client\Model\Progression;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @author Baptiste Leduc <baptiste.leduc@gmail.com>
@@ -11,30 +13,28 @@ class ProgressionApiTest extends ApiTestCase
 {
     public function testSimpleSearch()
     {
-        $response = $this->client->getProgressionApi()->get(PlatformType::PC, [$this->profileIds[0]]);
+        $progressions = $this->client->getProgressionApi()->get(PlatformType::PC, [$this->profileIds[0]]);
 
-        $this->assertArrayHasKey('player_profiles', $response);
-
-        $this->assertArrayHasKey('xp', $response['player_profiles'][0]);
-        $this->assertArrayHasKey('profile_id', $response['player_profiles'][0]);
-        $this->assertArrayHasKey('lootbox_probability', $response['player_profiles'][0]);
-        $this->assertArrayHasKey('level', $response['player_profiles'][0]);
+        /** @var Progression $progression */
+        foreach ($progressions as $progression) {
+            $this->assertTrue($progression instanceof Progression);
+            $this->assertTrue($progression->profileId instanceof Uuid);
+            $this->assertEquals($progression->lootboxProbability, $progression->getLootboxProbabilityPercent() * 100);
+        }
     }
 
     public function testMultipleSearch()
     {
-        $response = $this->client->getProgressionApi()->get(PlatformType::PC, $this->profileIds);
+        $progressions = $this->client->getProgressionApi()->get(PlatformType::PC, $this->profileIds);
 
-        $this->assertArrayHasKey('player_profiles', $response);
+        $this->assertEquals(count($this->profileIds), count($progressions));
 
-        $count = count($this->profileIds);
-        for ($i = 0; $i < $count; ++$i) {
-            $this->assertArrayHasKey('xp', $response['player_profiles'][$i]);
-            $this->assertArrayHasKey('profile_id', $response['player_profiles'][$i]);
-            $this->assertArrayHasKey('lootbox_probability', $response['player_profiles'][$i]);
-            $this->assertArrayHasKey('level', $response['player_profiles'][$i]);
-
-            $this->assertTrue(in_array($response['player_profiles'][$i]['profile_id'], $this->profileIds));
+        /** @var Progression $progression */
+        foreach ($progressions as $progression) {
+            $this->assertTrue($progression instanceof Progression);
+            $this->assertTrue($progression->profileId instanceof Uuid);
+            $this->assertTrue(in_array($progression->profileId->toString(), $this->profileIds));
+            $this->assertEquals($progression->lootboxProbability, $progression->getLootboxProbabilityPercent() * 100);
         }
     }
 
@@ -44,7 +44,7 @@ class ProgressionApiTest extends ApiTestCase
      */
     public function testExceptionPlatformType()
     {
-        $this->client->getProfileApi()->get('switch', 'panda_______');
+        $this->client->getProgressionApi()->get('switch', [$this->profileIds[0]]);
     }
 
     /**

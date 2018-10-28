@@ -5,6 +5,7 @@ namespace R6API\Client\Api;
 
 use R6API\Client\Api\Type\PlatformType;
 use R6API\Client\Exception\ApiException;
+use R6API\Client\Model\Progression;
 
 /**
  * API implementation to manage the profiles.
@@ -33,6 +34,11 @@ class ProgressionApi extends AbstractApi implements ProgressionApiInterface
         }
 
         $url = str_replace('%%platform%%', constant(PlatformType::class.'::_URL_'.$platform), static::URL);
-        return $this->resourceClient->getResource($url, ['profile_ids' => implode(',', $profileIds)]);
+        $data = $this->resourceClient->getResource($url, ['profile_ids' => implode(',', $profileIds)]);
+        return $this->serializer->deserialize(
+            $data,
+            Progression::class.'[]',
+            'json'
+        );
     }
 }

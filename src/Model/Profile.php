@@ -25,7 +25,7 @@ class Profile
     public $platformType;
 
     /**
-     * @var Uuid;
+     * @var Uuid
      */
     public $idOnPlatform;
 
