@@ -14,27 +14,28 @@ use Greg0ire\Enum\AbstractEnum;
  */
 final class SeasonType extends AbstractEnum
 {
-    const CURRENT = "-1";
+    const CURRENT = -1;
 
     /**
      * Year 1
      */
-    const Y1S1 = "1";
-    const Y1S2 = "2";
-    const Y1S3 = "3";
-    const Y1S4 = "4";
+    const Y1S1 = 1;
+    const Y1S2 = 2;
+    const Y1S3 = 3;
+    const Y1S4 = 4;
 
     /**
      * Year 2
      */
-    const Y2S1 = "5";
-    const Y2S2 = "6";
-    const Y2S3 = "7";
-    const Y2S4 = "8";
+    const Y2S1 = 5;
+    const Y2S2 = 6;
+    const Y2S3 = 7;
+    const Y2S4 = 8;
 
     /**
      * Year 3
      */
-    const Y3S1 = "9";
-    const Y3S2 = "10";
+    const Y3S1 = 9;
+    const Y3S2 = 10;
+    const Y3S3 = 11;
 }

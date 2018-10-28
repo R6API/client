@@ -14,6 +14,8 @@ use R6API\Client\Denormalizer\ProfileDenormalizer;
 use R6API\Client\Denormalizer\ProfileResponseDenormalizer;
 use R6API\Client\Denormalizer\ProgressionDenormalizer;
 use R6API\Client\Denormalizer\ProgressionResponseDenormalizer;
+use R6API\Client\Denormalizer\RankDenormalizer;
+use R6API\Client\Denormalizer\RankResponseDenormalizer;
 use R6API\Client\Http\AuthenticatedHttpClient;
 use R6API\Client\Http\HttpClient as ApiHttpClient;
 use Http\Discovery\HttpClientDiscovery;
@@ -170,7 +172,9 @@ class ClientBuilder
             new ProfileResponseDenormalizer(),
             new ProfileDenormalizer(),
             new ProgressionResponseDenormalizer(),
-            new ProgressionDenormalizer()
+            new ProgressionDenormalizer(),
+            new RankResponseDenormalizer(),
+            new RankDenormalizer(),
         ], [new JsonEncoder()]);
 
         $resourceClient = new ResourceClient(

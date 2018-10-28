@@ -94,7 +94,7 @@ $progressions = $client->getProgressionApi()->get(PlatformType::PC, ['575b8c76-a
 | `$profileIds` | Profiles to search  | Search by `profileId`, each one should be UUID            |
 
 `$progressions` will contains an array of `Progression` model:
-```
+```php
 class Progression
 {
     /**
@@ -134,52 +134,105 @@ $response = $client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, Sea
 | `$profileIds` | Profiles to search  | Search by `profileId`, each one should be UUID            |
 
 `$response` will contains:
-```
-array(1) {
-  'players' =>
-  array(1) {
-    '575b8c76-a33a-4c19-9618-d14b9343d527' =>
-    array(19) {
-      'board_id' =>
-      string(10) "pvp_ranked"
-      'past_seasons_abandons' =>
-      int(0)
-      'update_time' =>
-      string(32) "2018-08-23T08:02:29.015000+00:00"
-      'skill_mean' =>
-      double(26.8811438825)
-      'abandons' =>
-      int(0)
-      'season' =>
-      int(10)
-      'region' =>
-      string(4) "emea"
-      'profile_id' =>
-      string(36) "575b8c76-a33a-4c19-9618-d14b9343d527"
-      'past_seasons_losses' =>
-      int(13)
-      'max_mmr' =>
-      double(2830.40072145)
-      'mmr' =>
-      double(2688.11438825)
-      'wins' =>
-      int(22)
-      'skill_stdev' =>
-      double(6.01302559585)
-      'rank' =>
-      int(13)
-      'losses' =>
-      int(18)
-      'next_rank_mmr' =>
-      double(2700)
-      'past_seasons_wins' =>
-      int(11)
-      'previous_rank_mmr' =>
-      double(2500)
-      'max_rank' =>
-      int(14)
-    }
-  }
+```php
+class Rank
+{
+    /**
+     * @var string
+     */
+    public $boardId;
+
+    /**
+     * @var int
+     */
+    public $pastSeasonsAbandons;
+
+    /**
+     * @var \DateTime
+     */
+    public $updateTime;
+
+    /**
+     * @var float
+     */
+    public $skillMean;
+
+    /**
+     * @var int
+     */
+    public $abandons;
+
+    /**
+     * @var int
+     */
+    public $season;
+
+    /**
+     * @var string
+     */
+    public $region;
+
+    /**
+     * @var Uuid
+     */
+    public $profileId;
+
+    /**
+     * @var int
+     */
+    public $pastSeasonsLosses;
+
+    /**
+     * @var float
+     */
+    public $maxMmr;
+
+    /**
+     * @var float
+     */
+    public $mmr;
+
+    /**
+     * @var int
+     */
+    public $wins;
+
+    /**
+     * @var float
+     */
+    public $skillStdev;
+
+    /**
+     * @var int
+     */
+    public $rank;
+
+    /**
+     * @var int
+     */
+    public $losses;
+
+    /**
+     * @var int
+     */
+    public $nextRankMmr;
+
+    /**
+     * @var int
+     */
+    public $pastSeasonsWins;
+
+    /**
+     * @var int
+     */
+    public $previousRankMmr;
+
+    /**
+     * @var int
+     */
+    public $maxRank;
+
+    public function getWinLosseRate(): float;
 }
 ```
 
