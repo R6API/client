@@ -4,6 +4,7 @@ namespace R6API\Client\tests\Api;
 
 use R6API\Client\Api\Type\PlatformType;
 use R6API\Client\Api\Type\StatisticType;
+use R6API\Client\Model\Statistic;
 
 /**
  * @author Baptiste Leduc <baptiste.leduc@gmail.com>
@@ -28,9 +29,10 @@ class StatisticApiTest extends ApiTestCase
             $this->statistics
         );
 
-        $this->assertArrayHasKey('results', $response);
-        foreach ($this->statistics as $statistic) {
-            $this->assertArrayHasKey($statistic, $response['results'][$this->profileIds[0]]);
+        $this->assertTrue(is_iterable($response));
+        foreach ($response as $statistic) {
+            $this->assertTrue($statistic instanceof Statistic);
+            $this->assertEquals($this->profileIds[0], $statistic->profileId->toString());
         }
     }
 
@@ -42,11 +44,11 @@ class StatisticApiTest extends ApiTestCase
             $this->statistics
         );
 
-        $this->assertArrayHasKey('results', $response);
-        foreach ($this->profileIds as $profileId) {
-            foreach ($this->statistics as $statistic) {
-                $this->assertArrayHasKey($statistic, $response['results'][$profileId]);
-            }
+        $this->assertTrue(is_iterable($response));
+        $this->assertCount(count($this->profileIds), $response);
+        foreach ($response as $statistic) {
+            $this->assertTrue($statistic instanceof Statistic);
+            $this->assertTrue(in_array($statistic->profileId->toString(), $this->profileIds));
         }
     }
 

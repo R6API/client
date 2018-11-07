@@ -6,6 +6,7 @@ namespace R6API\Client\Api;
 use R6API\Client\Api\Type\PlatformType;
 use R6API\Client\Api\Type\StatisticType;
 use R6API\Client\Exception\ApiException;
+use R6API\Client\Model\Statistic;
 
 /**
  * API implementation to manage the statistics.
@@ -41,20 +42,15 @@ class StatisticApi extends AbstractApi implements StatisticApiInterface
         }
 
         $url = str_replace('%%platform%%', constant(PlatformType::class.'::_URL_'.$platform), static::URL);
-        $response = $this->resourceClient->getResource($url, [
+        $data = $this->resourceClient->getResource($url, [
             'populations' => implode(',', $profileIds),
             'statistics' => implode(',', $statistics)
         ]);
 
-        // cleaning response by removing ":infinite" at end of statistic ids
-        foreach ($response['results'] as $profileId => $statistics) {
-            foreach ($statistics as $statisticId => $statisticValue) {
-                unset($response['results'][$profileId][$statisticId]);
-                $statisticId = preg_replace('/:infinite/', '', $statisticId);
-                $response['results'][$profileId][$statisticId] = $statisticValue;
-            }
-        }
-
-        return $response;
+        return $this->serializer->deserialize(
+            $data,
+            Statistic::class.'[]',
+            'json'
+        );
     }
 }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace R6API\Client\Model;
 
 use Ramsey\Uuid\Uuid;
-use R6API\Client\Api\Type\PlatformType;
 
 class Rank
 {
