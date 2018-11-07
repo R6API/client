@@ -133,7 +133,7 @@ $response = $client->getRankApi()->get(PlatformType::PC, RegionType::EUROPE, Sea
 | `$season`     | Season to look at   | Check \R6API\Client\Api\Type\SeasonType                   |
 | `$profileIds` | Profiles to search  | Search by `profileId`, each one should be UUID            |
 
-`$response` will contains:
+`$response` will contains an array of `Rank` model:
 ```php
 class Rank
 {
@@ -256,26 +256,19 @@ $response = $client->getStatisticApi()->get(PlatformType::PC, ['575b8c76-a33a-4c
 | `$profileIds` | Profiles to search  | Search by `profileId`, each one should be UUID               |
 | `$statistics` | Statistic to filter | Check \R6API\Client\Api\Type\StatisticType, this is an array |
 
-`$response` will contains:
+`$response` will contains an array of `Statistic` model:
 ```
-array(1) {
-  'results' =>
-  array(1) {
-    '575b8c76-a33a-4c19-9618-d14b9343d527' =>
-    array(6) {
-      'casualpvp_matchwon' =>
-      int(342)
-      'casualpvp_kills' =>
-      int(1424)
-      'casualpvp_death' =>
-      int(1810)
-      'casualpvp_matchlost' =>
-      int(279)
-      'casualpvp_matchplayed' =>
-      int(621)
-      'casualpvp_timeplayed' =>
-      int(506419)
-    }
-  }
+class Statistic
+{
+    /**
+     * @var Uuid
+     */
+    public $profileId;
+
+    /**
+     * @var array
+     */
+    public $statistics;
 }
 ```
+Understand that `$statistics` array will contains all responses with `StatisticType` as key and corresponding value as value ;)
