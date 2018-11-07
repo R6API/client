@@ -7,6 +7,7 @@ use R6API\Client\Api\Type\PlatformType;
 use R6API\Client\Api\Type\RegionType;
 use R6API\Client\Api\Type\SeasonType;
 use R6API\Client\Exception\ApiException;
+use R6API\Client\Model\Rank;
 
 /**
  * API implementation to manage the ranks.
@@ -20,7 +21,7 @@ class RankApi extends AbstractApi implements RankApiInterface
     /**
      * {@inheritdoc}
      */
-    public function get(string $platform, string $region, string $season, array $profileIds): array
+    public function get(string $platform, string $region, int $season, array $profileIds): array
     {
         $parameters = [];
 
@@ -54,6 +55,11 @@ class RankApi extends AbstractApi implements RankApiInterface
         }
         $parameters['profile_ids'] = implode(',', $profileIds);
 
-        return $this->resourceClient->getResource($url, $parameters);
+        $data = $this->resourceClient->getResource($url, $parameters);
+        return $this->serializer->deserialize(
+            $data,
+            Rank::class.'[]',
+            'json'
+        );
     }
 }
